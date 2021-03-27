@@ -1,7 +1,7 @@
 from flask import render_template, Flask
 import os
 
-app = Flask("__main__")
+app = Flask("__main__",template_folder=(os.path.dirname(os.path.realpath(__file__))+"/static/templatefolder"),static_folder=(os.path.dirname(os.path.realpath(__file__))+"/static"))
 
 @app.route("/")
 def main():
