@@ -7,8 +7,24 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import Login from './components/Login'
 
+
+var firebase = require('firebase');
+var firebaseui = require('firebaseui');
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBMY-qC5lI8ZCW5MoJcj--D2ZyswABHkII",
+  authDomain: "greeninvestment-9d42a.firebaseapp.com",
+  databaseURL: "https://greeninvestment-9d42a-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "greeninvestment-9d42a",
+  storageBucket: "greeninvestment-9d42a.appspot.com",
+  messagingSenderId: "952304435921",
+  appId: "1:952304435921:web:f8da6e6e19290e034f7bf0",
+  measurementId: "G-ELHN28XH1B"
+};
+
+firebase.initializeApp(firebaseConfig);
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 
 export default function App() {
@@ -54,7 +70,7 @@ function SignUpPage() {
       signup page
     </h2>
     <div>
-      <Login/>
+      {/* <Login/> */}
     </div>
   </div>
   );
