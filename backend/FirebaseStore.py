@@ -1,0 +1,28 @@
+import pyrebase
+
+
+class FB:
+
+    def __init__(self):
+        config = {
+            "apiKey": "AIzaSyBMY-qC5lI8ZCW5MoJcj--D2ZyswABHkII",
+            "authDomain": "greeninvestment-9d42a.firebaseapp.com",
+            "databaseURL": "https://greeninvestment-9d42a-default-rtdb.europe-west1.firebasedatabase.app",
+            "projectId": "greeninvestment-9d42a",
+            "storageBucket": "greeninvestment-9d42a.appspot.com",
+            "messagingSenderId": "952304435921",
+            "appId": "1:952304435921:web:f8da6e6e19290e034f7bf0",
+            "measurementId": "G-ELHN28XH1B"
+        }
+
+        self.db = pyrebase.initialize_app(config).database()
+
+    def setPortfolio(self, name, portfolio):
+        """Take a username * portfolio & set it in the realtime database"""
+        self.db.child("users/" + name).set(portfolio)
+        return True
+
+    def setStock(self, ticker, data):
+        """Take a ticker and data about it & set it in the realtime database"""
+        self.db.child("stocks/"+ticker).set(data)
+        return True
