@@ -7,16 +7,19 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
+import Login from './components/Login'
+
+
 
 export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/logIn">
-          <LogInPage />
-        </Route>
         <Route path="/signUp">
           <SignUpPage/>
+        </Route>
+        <Route path="/logIn">
+          <LogInPage />
         </Route>
         <Route path="/">
           <HomePage/>
@@ -31,13 +34,13 @@ function HomePage() {
   <div>
     <ul>
       <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
         <Link to="/signUp">Sign Up</Link>
       </li>
       <li>
         <Link to="/logIn">Log In</Link>
+      </li>
+      <li>
+        <Link to="/">Home</Link>
       </li>
     </ul>
   </div>
@@ -45,7 +48,16 @@ function HomePage() {
 }
 
 function SignUpPage() {
-  return <h2>signup page</h2>;
+  return (
+  <div>
+    <h2>
+      signup page
+    </h2>
+    <div>
+      <Login/>
+    </div>
+  </div>
+  );
 }
 
 function LogInPage() {
