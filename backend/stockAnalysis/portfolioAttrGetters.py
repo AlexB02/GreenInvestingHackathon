@@ -35,3 +35,11 @@ class Portfolio():
             stock = Stock(item)
             total_growth += stock.get_growth_prospect
         return total_growth/length_list
+
+    def portfolio_green_index(self):
+        length_list = len(list)
+        total_green = 0
+        for item in self.list:
+            stock = Stock(item)
+            total_green += stock.get_green_index
+        return total_green/length_list

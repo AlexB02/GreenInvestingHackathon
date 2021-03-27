@@ -1,6 +1,7 @@
 import finviz
 from currencyEnum import Currency as cur
 from stockHeatEnum import heatCheck
+from greenWebScraping import get_dictionary
 
 class Stock():
     def __init__(self, ticker):
@@ -13,6 +14,9 @@ class Stock():
     def get_current_price(self):
         current_price = float(self.stock.get("Price"))
         return current_price
+    def get_company(self):
+        company_name = self.stock.get("Company")
+        return company_name
         
     def get_currency(self): 
         country = self.stock.get('Country')
@@ -56,6 +60,16 @@ class Stock():
         price_earning_ratio = self.stock.get('P/E')
         # 14 is average P/E
         return float(price_earning_ratio)/14
+    
+    def get_green_index(self):
+        company_name = self.get_company().split(" ")[0]
+        print(self.get_company().split(" ")[0])
+        # print(company_name)
+        dictionary = get_dictionary()
+        try:
+            return int((500-dictionary.get(company_name))/5)
+        except:
+            return 0
 
-stock = Stock('AAPL')
-print(stock.get_target_price_ratio())
+stock = Stock('MSFT')
+print(stock.get_green_index())
