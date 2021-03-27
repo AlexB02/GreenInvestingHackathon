@@ -15,10 +15,10 @@ class Stock():
         return current_price
         
     def get_currency(self): 
-        currency = self.stock.get('Country')
-        if currency == 'USA': 
+        country = self.stock.get('Country')
+        if country == 'USA': 
             return cur.USD
-        elif currency == 'GBP':
+        elif country == 'United Kingdom':
             return cur.GBP
         else:
             return cur.EUR
