@@ -8,9 +8,9 @@ import {
   useParams
 } from "react-router-dom";
 
-
-var firebase = require('firebase');
-var firebaseui = require('firebaseui');
+import firebase from "firebase";
+// var firebase = require('firebase');
+// var firebaseui = require('firebaseui');
 
 const firebaseConfig = {
   apiKey: "AIzaSyBMY-qC5lI8ZCW5MoJcj--D2ZyswABHkII",
@@ -24,8 +24,8 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
+// var ui = new firebaseui.auth.AuthUI(firebase.auth());
+// var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function App() {
   return (
@@ -70,7 +70,7 @@ function SignUpPage() {
       signup page
     </h2>
     <div>
-      {/* <Login/> */}
+      {googleSignInPopup(googleProvider())}
     </div>
   </div>
   );
@@ -78,4 +78,47 @@ function SignUpPage() {
 
 function LogInPage() {
   return <h2>Login Page</h2>;
+}
+
+function googleProvider() {
+  // [START auth_google_provider_create]
+  var provider = new firebase.auth.GoogleAuthProvider();
+  // [END auth_google_provider_create]
+
+  // [START auth_google_provider_scopes]
+  // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+  // [END auth_google_provider_scopes]
+  
+  // [START auth_google_provider_params]
+  provider.setCustomParameters({
+    'login_hint': 'user@example.com'
+  });
+  // [END auth_google_provider_params]
+  return provider;
+}
+
+function googleSignInPopup(provider) {
+  // [START auth_google_signin_popup]
+  firebase.auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      var credential = result.credential;
+
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+    }).catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+  // [END auth_google_signin_popup]
 }
