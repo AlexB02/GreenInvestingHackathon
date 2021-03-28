@@ -206,7 +206,6 @@ class getStock extends React.Component {
   //   return response.json();
       // }
       // catch (err) {
-      //   console.log("fuck")
       //   console.log(err)
       // }
     }
