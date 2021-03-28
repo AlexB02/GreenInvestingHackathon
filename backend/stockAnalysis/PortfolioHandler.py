@@ -1,7 +1,7 @@
-from stockAttributeGetters import Stock
+from StockHandler import Stock
 
-from currencyEnum import Currency as cur
-from stockHeatEnum import heatCheck
+from CurrencyEnum import Currency as cur
+from HeatCheckEnum import heatCheck
 
 class Portfolio():
     def __init__(self, portfolio):

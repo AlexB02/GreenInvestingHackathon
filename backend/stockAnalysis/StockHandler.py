@@ -1,7 +1,7 @@
 import finviz
-from currencyEnum import Currency as cur
-from stockHeatEnum import heatCheck
-from greenWebScraping import get_dictionary
+from CurrencyEnum import Currency as cur
+from HeatCheckEnum import heatCheck
+from GreenWebScraping import get_dictionary
 
 class Stock():
     def __init__(self, ticker):
