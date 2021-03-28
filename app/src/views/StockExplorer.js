@@ -1,4 +1,6 @@
 import React from "react";
+import $ from 'jquery';
+
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
 import {
@@ -147,7 +149,29 @@ function SectorPage(sectorName) {
   );
 }
 
-function getStock(ticker) {
+class getStock extends React.Component {
+
+  fun = () => {
+    let _this = this;
+    $(document).ready(function(){
+      // Get user details
+      const req = $.ajax({
+        url: "/getStock",
+        type: "POST",
+        data: JSON.stringify({"ticker": "AAPL"}),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+      });
+
+      try {
+        req.done(function(data) {
+          console.log("YOLO")
+        });
+      }
+      catch (e) {};
+    });
+  };
+
 
   // const { foo, bar }  = await fetch("/getStock", {
   //       method: "POST",
@@ -165,20 +189,19 @@ function getStock(ticker) {
   //     .then(data => console.log(data));
   // try {
   //   console.log(ticker)
-    var tempVar;
-    fetch("/getStock", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"ticker": ticker})})
-        .then((response) => response.json())
-        .then((responseData) => {
-          for (let key in Object.keys(responseData)) {
-            console.log(responseData[key])
-          }
-          tempVar = responseData;
-        }).catch(err => { console.log(err)})
+  //   return fetch("/getStock", {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({"ticker": ticker})})
+  //       .then((response) => response.json())
+  //       .then((responseData) => {
+  //         for (let key in Object.keys(responseData)) {
+  //           console.log(responseData[key])
+  //         }
+  //       }).catch(err => { console.log(err)}
+  //       )
   //   });
   //   return response.json();
       // }
