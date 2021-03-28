@@ -156,7 +156,7 @@ class getStock extends React.Component {
     $(document).ready(function(){
       // Get user details
       const req = $.ajax({
-        url: "/getStock",
+        url: "localhost:5000",
         type: "POST",
         data: JSON.stringify({"ticker": "AAPL"}),
         dataType: "json",
@@ -165,11 +165,11 @@ class getStock extends React.Component {
 
       try {
         req.done(function(data) {
-          console.log("YOLO")
+          console.log(data)
         });
       }
-      catch (e) {};
-    });
+      catch (e) {}
+    })
   };
 
 
