@@ -106,7 +106,7 @@ function SectorPage(sectorName) {
             <Col>
               <Card>
                 <CardHeader>
-                  {getStock("AAPL")}
+                  {getStock.fun("AAPL")}
                   {/*<p>applestuff: {getStock('AAPL')}</p>*/}
                   {/*{getStock('AAPL').json()["AAPL"]}*/}
                   {/*{Object.entries(getStock("AAPL"))}*/}
@@ -151,7 +151,7 @@ function SectorPage(sectorName) {
 
 class getStock extends React.Component {
 
-  fun = () => {
+  static fun = (ticker) => {
     let _this = this;
     $(document).ready(function(){
       // Get user details
