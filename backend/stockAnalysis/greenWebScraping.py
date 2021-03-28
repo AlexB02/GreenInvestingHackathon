@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
+
 def get_dictionary():
     url = "https://www.newsweek.com/top-500-global-companies-green-rankings-2017-18"
 
