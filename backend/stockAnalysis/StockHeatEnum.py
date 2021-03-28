@@ -1,8 +1,9 @@
 from enum import Enum
 
-class heatCheck(Enum):
+
+class HeatCheck(Enum):
     """
     Enumerated class of supported heat.
     """
-    HOT = 'hot'
-    COLD = 'cold'
+    HOT = 'HOT'
+    COLD = 'COLD'
