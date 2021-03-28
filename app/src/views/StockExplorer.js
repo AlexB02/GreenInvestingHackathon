@@ -106,7 +106,7 @@ function SectorPage(sectorName) {
             <Col>
               <Card>
                 <CardHeader>
-                  {getStock.fun("AAPL")}
+                  {doStuff()}
                   {/*<p>applestuff: {getStock('AAPL')}</p>*/}
                   {/*{getStock('AAPL').json()["AAPL"]}*/}
                   {/*{Object.entries(getStock("AAPL"))}*/}
@@ -149,27 +149,41 @@ function SectorPage(sectorName) {
   );
 }
 
+function doStuff() {
+  const gets = getStock({"stock": "AAPL"});
+  gets.fun()
+
+}
+
 class getStock extends React.Component {
 
-  static fun = (ticker) => {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+
+   fun = () => {
     let _this = this;
     $(document).ready(function(){
       // Get user details
       const req = $.ajax({
         url: "/getStock",
         type: "POST",
-        data: JSON.stringify({"ticker": "AAPL"}),
+        data: JSON.stringify({"ticker": _this.state.ticker}),
         dataType: "json",
         contentType: "application/json;charset=utf-8",
       });
 
       try {
         req.done(function(data) {
-          console.log("YOLO")
+          _this.setState({"stock" : data})
+          console.log(_this.state)
+          return data
         });
       }
-      catch (e) {};
+      catch (e) {}
     });
+    console.log(_this.state);
   };
 
 
