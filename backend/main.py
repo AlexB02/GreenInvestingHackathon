@@ -46,7 +46,7 @@ def getTopThreeGreenStocks():
     industry = Sector(request.json["industry"])
     stocks = []
     for ticker in industry.get_top_in_industry():
-        stocks.add(Sh(ticker))
+        stocks.add(Sh(ticker).make_profile())
     return jsonify({"top_stocks": stocks})
 
 def getStockLocal(ticker):
