@@ -37,5 +37,5 @@ class Portfolio():
         total_green = 0
         for item in self.list:
             stock = Stock(item)
-            total_green += (stock.get_green_index * float(portfolio.get(item))/100))
+            total_green += (stock.get_green_index * float(portfolio.get(item))/100)
         return total_green
