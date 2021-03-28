@@ -1,7 +1,9 @@
-from flask import render_template, Flask
+from flask import render_template, Flask, request, jsonify
 import os
 from FirebaseStore import FB
-from stockAnalysis.PortfolioHandler import Portfolio as PH
+from PortfolioHandler import Portfolio as Ph
+from StockHandler import Stock as Sh
+from datetime import date
 
 app = Flask("__main__", template_folder=(os.path.dirname(os.path.realpath(__file__)) + "/static/templatefolder"),
             static_folder=(os.path.dirname(os.path.realpath(__file__)) + "/static/react/app/static"))
@@ -11,29 +13,46 @@ db = FB()
 
 @app.route("/")
 def main():
-    db.setStock("AAPL", {"PE": 1.4, "ROI": 34})
-    db.setStock("MSFT", {"PE": 1.4, "ROI": 34})
-    portfolio1 = {"curr_value": 10, "green_index": "5/5", "stocks": {"AAPL": 4.04, "TSLA": 95.96}}
-    db.setPortfolio("alex", {"customFolio1": portfolio1})
     return render_template("index.html")
 
 
-# @app.route("/setPortfolio", methods=["POST", "GET"]) {"user": user, "name": name, "stocks": {}}
+@app.route("/getPortfolio", methods=["POST", "GET"])
+def getPortfolio():
+    user = request.json["user"]
+    name = request.json["name"]
+    return db.getPortfolio(user, name)
+
+
+@app.route("/setPortfolio", methods=["POST", "GET"])  # {"user": user, "name": name, "stocks": {}}
 def setPortfolio():
-    user = "alex"  # request.json["user"]
-    name = "portfolio"
-    stocks = {"AAPL": 46.2, "MSFT": 53.8}
-    # portfolio = {"curr_value": 10, "green_index": "5/5", "stocks": {"AAPL": 4.04, "TSLA": 95.96}} request.json["portfolio"]
-    handler = PH(stocks)
-    green_index = handler.portfolio_green_index()
-    volatility = handler.portfolio_volatitity()
-    heat_val = handler.portfolio_heat_value()
-    growth_prospect = handler.portfolio_growth_prospect()
-    db.setPortfolio(user, {name: {"green_index": green_index, "volatility": volatility, "heat_val": heat_val, "growth_prospect": growth_prospect, "stocks": stocks}})
+    user = request.json["user"]
+    name = request.json["name"]
+    stocks = request.json["stocks"]  # {"AAPL": 46.2, "MSFT": 53.8}
+    handler = Ph(stocks)
+
+    db.setPortfolio(user, {name: handler.make_profile()})
+    return jsonify({"success": "success"})
 
 
-# if __name__ == "__main__":
-#     port = int(os.environ.get("PORT", 5000))
-#     app.run(host='0.0.0.0', port=port, debug=True)
+@app.route("/getStock", methods=["POST", "GET"])
+def getStock():
+    ticker = request.json["ticker"]
+    return db.getStock(ticker)
 
-setPortfolio()
+
+def getStockLocal(ticker):
+    return db.getStock(ticker)
+
+
+@app.route("/setStock", methods=["POST", "GET"])
+def refreshStock():
+    ticker = request.json["ticker"]
+    if db.requiresUpdate(ticker):
+        handler = Sh(ticker)
+        db.setStock(ticker, handler.make_profile())
+    return getStockLocal(ticker)
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)

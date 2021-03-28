@@ -1,5 +1,5 @@
 import pyrebase
-
+from datetime import date
 
 class FB:
 
@@ -22,7 +22,24 @@ class FB:
         self.db.child("users/" + name).set(portfolio)
         return True
 
+    def getPortfolio(self, user, name):
+        portfolio = {}
+        p = self.db.child().get("users/" + user + "/" + name)
+        for att in p.each():
+            portfolio[att.key()] = att.val()
+        return portfolio
+
     def setStock(self, ticker, data):
         """Take a ticker and data about it & set it in the realtime database"""
         self.db.child("stocks/"+ticker).set(data)
         return True
+
+    def getStock(self, ticker):
+        stock = {}
+        p = self.db.child().get("stocks/" + ticker)
+        for att in p.each():
+            stock[att.key()] = att.val()
+        return stock
+
+    def requiresUpdate(self, ticker):
+        return self.db.child("stocks/" + ticker).get("date") != str(date.today)

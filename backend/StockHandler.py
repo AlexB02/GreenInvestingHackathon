@@ -1,10 +1,11 @@
 import finviz
-from CurrencyEnum import Currency as Cur
-from StockHeatEnum import HeatCheck
+from CurrencyEnum import Currency as cur
+from HeatEnum import HeatCheck
 from GreenWebScraping import get_dictionary
+from datetime import date
 
 
-class Stock():
+class Stock:
     def __init__(self, ticker):
         self.ticker = ticker
         self.stock = finviz.get_stock(ticker)
@@ -23,11 +24,11 @@ class Stock():
     def get_currency(self):
         country = self.stock.get('Country')
         if country == 'USA':
-            return Cur.USD
+            return cur.USD
         elif country == 'United Kingdom':
-            return Cur.GBP
+            return cur.GBP
         else:
-            return Cur.EUR
+            return cur.EUR
 
     def get_profit_margin_ratio(self):
         profit_margin = float(self.stock.get('Profit Margin').strip('%'))
@@ -37,12 +38,12 @@ class Stock():
 
     def get_heatValue(self):
         heat = float(self.stock.get('Rel Volume'))
-        # volume 10% below or above 5d average volume determines 
+        # volume 10% below or above 5d average volume determines
         # how "hot" the stock is on that particular day
         if heat > 1.10:
-            return heatCheck.HOT
+            return HeatCheck.HOT
         elif heat < 0.90:
-            return heatCheck.COLD
+            return HeatCheck.COLD
 
     def get_volatility(self):
         volatility = float(self.stock.get("Volatility").split(" ")[1].strip("%"))
@@ -50,8 +51,8 @@ class Stock():
 
     def get_growth_prospect(self):
         target_price_ratio = self.get_target_price_ratio()
-        price_earning_ratio = self.get_price_earning_ratio()
-        return target_price_ratio + price_earning_ratio
+        price_earning_ratio = self.get_price_earning_ratio
+        return target_price_ratio + price_earning_ratio()
 
     def get_target_price_ratio(self):
         target_price = float(self.stock.get("Target Price"))
@@ -71,3 +72,22 @@ class Stock():
             return int((500 - dictionary.get(company_name)) / 5)
         except:
             return 0
+
+    def get_heat_check_value(self):
+        return float(self.stock.get('Rel Volume'))
+
+    def make_profile(self):
+        return {
+            "date": str(date.today()),
+            "company": self.get_company(),
+            "current price": self.get_current_price(),
+            "volatility": self.get_volatility(),
+            "sector": self.get_sector(),
+            "currency": str(self.get_currency()),
+            "profit_margin_ratio": self.get_profit_margin_ratio(),
+            "get_heat_value": str(self.get_heatValue()),
+            "growth_prospect": self.get_growth_prospect(),
+            "target_price_ratio": self.get_target_price_ratio(),
+            "price_earning_ratio": self.get_price_earning_ratio(),
+            "green_index": self.get_green_index()
+        }
