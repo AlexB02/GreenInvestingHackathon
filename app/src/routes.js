@@ -1,6 +1,6 @@
-import Dashboard from "./views/Dashboard.js";
+import StockExplorer from "./views/StockExplorer.js";
 import UserProfile from "./views/UserProfile.js";
-import TableList from "./views/TableList.js";
+import PortfolioOverview from "./views/PortfolioOverview.js";
 import Typography from "./views/Typography.js";
 import Icons from "./views/Icons.js";
 import Maps from "./views/Maps.js";
@@ -17,10 +17,10 @@ const dashboardRoutes = [
   //   layout: "/admin",
   // },
   {
-    path: "/dashboard",
-    name: "Dashboard",
+    path: "/stockExplorer",
+    name: "Stock Explorer",
     icon: "nc-icon nc-chart-pie-35",
-    component: Dashboard,
+    component: StockExplorer,
     layout: "/admin",
   },
   // {
@@ -31,10 +31,10 @@ const dashboardRoutes = [
   //   layout: "/admin",
   // },
   {
-    path: "/table",
-    name: "Table List",
+    path: "/portfolioOverview",
+    name: "Portfolio Overview",
     icon: "nc-icon nc-notes",
-    component: TableList,
+    component: PortfolioOverview,
     layout: "/admin",
   },
   // {
