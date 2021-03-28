@@ -17,6 +17,7 @@ import {
 } from "react-bootstrap";
 import {CardBody, CardHeader} from "reactstrap";
 import Tab from 'react-bootstrap/Tab'
+import {BrowserRouter} from "react-router-dom";
 
 function StockExplorer() {
   return (
@@ -61,19 +62,26 @@ function StockExplorer() {
             </Nav>
           </Col>
           <Col sm={9}>
-            <Tab.Content>
-              <Tab.Pane eventKey="technology">{SectorPage("technology")}</Tab.Pane>
-              <Tab.Pane eventKey="consumer_cyclical">{SectorPage("consumer_cyclical")}</Tab.Pane>
-              <Tab.Pane eventKey="basic_materials">{SectorPage("basic_materials")}</Tab.Pane>
-              <Tab.Pane eventKey="communication_services">{SectorPage("communication_services")}</Tab.Pane>
-              <Tab.Pane eventKey="consumer_defences">{SectorPage("consumer_defences")}</Tab.Pane>
-              <Tab.Pane eventKey="energy">{SectorPage("energy")}</Tab.Pane>
-              <Tab.Pane eventKey="financial">{SectorPage("financial")}</Tab.Pane>
-              <Tab.Pane eventKey="healthcare">{SectorPage("healthcare")}</Tab.Pane>
-              <Tab.Pane eventKey="industrials">{SectorPage("industrials")}</Tab.Pane>
-              <Tab.Pane eventKey="real_estate">{SectorPage("real_estate")}</Tab.Pane>
-              <Tab.Pane eventKey="utilities">{SectorPage("utilities")}</Tab.Pane>
-            </Tab.Content>
+            <BrowserRouter>
+              <Route path={}>
+
+              </Route>
+              <Route path={}>
+                <Tab.Content>
+                  <Tab.Pane eventKey="technology">{SectorPage("technology")}</Tab.Pane>
+                  <Tab.Pane eventKey="consumer_cyclical">{SectorPage("consumer_cyclical")}</Tab.Pane>
+                  <Tab.Pane eventKey="basic_materials">{SectorPage("basic_materials")}</Tab.Pane>
+                  <Tab.Pane eventKey="communication_services">{SectorPage("communication_services")}</Tab.Pane>
+                  <Tab.Pane eventKey="consumer_defences">{SectorPage("consumer_defences")}</Tab.Pane>
+                  <Tab.Pane eventKey="energy">{SectorPage("energy")}</Tab.Pane>
+                  <Tab.Pane eventKey="financial">{SectorPage("financial")}</Tab.Pane>
+                  <Tab.Pane eventKey="healthcare">{SectorPage("healthcare")}</Tab.Pane>
+                  <Tab.Pane eventKey="industrials">{SectorPage("industrials")}</Tab.Pane>
+                  <Tab.Pane eventKey="real_estate">{SectorPage("real_estate")}</Tab.Pane>
+                  <Tab.Pane eventKey="utilities">{SectorPage("utilities")}</Tab.Pane>
+                </Tab.Content>
+              </Route>
+            </BrowserRouter>
           </Col>
         </Row>
       </Tab.Container>
@@ -84,7 +92,54 @@ function StockExplorer() {
 function SectorPage(sectorName) {
   return (
       <div>
+        <Container fluid>
+          <Row>
+            <Col>
+              <h2>{sectorName}</h2>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Card>
+                <CardHeader>
+                  {/*{...}*/}
+                </CardHeader>
+                <CardBody>
+                  {/*{...}*/}
+                  {/*{...}*/}
+                  <ProgressBar variant="success" now={{/*score for green index*/}} />
+                  <ProgressBar variant="warning" now={{/*score for volatility index*/}} />
+                  <ProgressBar variant="info" now={{/*score for profitability index*/}} />
+                </CardBody>
+              </Card>
+            </Col>
+            <Col>
+              <Card>
+                <CardHeader>
+                {/*  */}
+                </CardHeader>
+                <CardBody>
+                  {/*{...}*/}
+                  {/*{...}*/}
+                </CardBody>
+              </Card>
+            </Col>
+            <Col>
+              <Card>
+                <CardHeader>
+                {/*  */}
+                </CardHeader>
+                <CardBody>
+                  {/*{...}*/}
+                  {/*{...}*/}
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+
       </div>
+
   );
 }
 
