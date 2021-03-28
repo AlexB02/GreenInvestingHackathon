@@ -1,4 +1,4 @@
-from flask import render_template, Flask, request, jsonify
+from flask import render_template, Flask, request, jsonify, make_response
 import os
 import finviz
 from FirebaseStore import FB
@@ -6,19 +6,27 @@ from PortfolioHandler import Portfolio as Ph
 from SectorTop import Sector
 from StockHandler import Stock as Sh
 from datetime import date
+from flask_cors import CORS, cross_origin
 
-app = Flask("__main__", template_folder=(os.path.dirname(os.path.realpath(__file__)) + "/static/templatefolder"),
-            static_folder=(os.path.dirname(os.path.realpath(__file__)) + "/static/react/app/static"))
+app = Flask(__name__)
+cors = CORS(app)
+
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = FB()
 
-
-@app.route("/")
-def main():
-    return render_template("index.html")
-
+@app.route("/get", methods=["POST", "GET"])
+@cross_origin()
+def get():
+    ticker = request.json["ticker"]
+    response(ticker)
+    response.headers.add('Access-Control-Allow-Origin', "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
 
 @app.route("/getPortfolio", methods=["POST", "GET"])
+@cross_origin()
 def getPortfolio():
     user = request.json["user"]
     name = request.json["name"]
@@ -26,6 +34,7 @@ def getPortfolio():
 
 
 @app.route("/setPortfolio", methods=["POST", "GET"])  # {"user": user, "name": name, "stocks": {}}
+@cross_origin()
 def setPortfolio():
     user = request.json["user"]
     name = request.json["name"]
@@ -35,25 +44,28 @@ def setPortfolio():
     db.setPortfolio(user, {name: handler.make_profile()})
     return jsonify({"success": "success"})
 
-
 @app.route("/getStock", methods=["POST", "GET"])
+@cross_origin()
 def getStock():
     ticker = request.json["ticker"]
     return jsonify(db.getStock(ticker))
 
 @app.route("/getTopThreeGreenStocks", methods=["POST", "GET"])
+@cross_origin()
 def getTopThreeGreenStocks():
-    industry = Sector(request.json["industry"])
+    industry = Sector("Technology") # Sector(request.json["industry"])
     stocks = []
     for ticker in industry.get_top_in_industry():
-        stocks.add(Sh(ticker).make_profile())
+        stocks.append(Sh(ticker).make_profile())
     return jsonify({"top_stocks": stocks})
+
 
 def getStockLocal(ticker):
     return db.getStock(ticker)
 
 
 @app.route("/refreshstock", methods=["POST", "GET"])
+@cross_origin()
 def refreshStock():
     ticker = request.json["ticker"]
     if db.requiresUpdate(ticker):
