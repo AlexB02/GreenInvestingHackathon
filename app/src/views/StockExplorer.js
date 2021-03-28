@@ -104,7 +104,8 @@ function SectorPage(sectorName) {
             <Col>
               <Card>
                 <CardHeader>
-                  <p>applestuff: {getStock('AAPL')}</p>
+                  {getStock("AAPL")}
+                  {/*<p>applestuff: {getStock('AAPL')}</p>*/}
                   {/*{getStock('AAPL').json()["AAPL"]}*/}
                   {/*{Object.entries(getStock("AAPL"))}*/}
                   {/*{getTopThreeGreenStocks("Technology")}*/}
@@ -145,42 +146,67 @@ function SectorPage(sectorName) {
       </div>
   );
 }
+
 function getStock(ticker) {
-  try {
-    console.log(ticker)
+
+  // const { foo, bar }  = await fetch("/getStock", {
+  //       method: "POST",
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({"ticker": ticker})
+  //     }).then(result => result.data);
+  // console.log(foo)
+  // console.log(bar)
+  // return foo;
+
+  // fetch('/getStock')
+  //     .then(response => response.json())
+  //     .then(data => console.log(data));
+  // try {
+  //   console.log(ticker)
+    var tempVar;
     fetch("/getStock", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"ticker": ticker})
-    }).then((response) => response.json())
+      body: JSON.stringify({"ticker": ticker})})
+        .then((response) => response.json())
         .then((responseData) => {
-          console.log(responseData)
-          return <div>
-            <p>I am sad :( </p>
-          </div>;
-        })
-  }
-  catch (err) {
-    console.log("fuck")
-    console.log(err)
-  }
-}
-function getTopThreeGreenStocks(industry) {
-  try {
-    fetch("/getTopThreeGreenStocks", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"industry": industry})
-    }).then((response) => response.json())
-        .then((responseData) => {
-          return responseData;
-        })
-  }
-  catch (err) {}
-}
+          for (let key in Object.keys(responseData)) {
+            console.log(responseData[key])
+          }
+          tempVar = responseData;
+        }).catch(err => { console.log(err)})
+  //   });
+  //   return response.json();
+      // }
+      // catch (err) {
+      //   console.log("fuck")
+      //   console.log(err)
+      // }
+    }
 
-export default StockExplorer;
+  function tempFunc() {
+    return <p>this sucks balls</p>;
+  }
+
+  function getTopThreeGreenStocks(industry) {
+    try {
+      fetch("/getTopThreeGreenStocks", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"industry": industry})
+      }).then((response) => response.json())
+          .then((responseData) => {
+            return responseData;
+          })
+    } catch (err) {
+    }
+  }
+
+  export default StockExplorer;
+
