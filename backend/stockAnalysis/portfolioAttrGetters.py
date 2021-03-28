@@ -7,7 +7,7 @@ class Portfolio():
     def __init__(self, portfolio):
         self.portfolio = portfolio
         
-    def portfolio_volatitity(self):
+    def portfolio_volatility(self):
         total_vol = 0
         for item in self.portfolio.keys:
             stock = Stock(item)
