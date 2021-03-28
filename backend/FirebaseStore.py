@@ -41,5 +41,6 @@ class FB:
             stock[att.key()] = att.val()
         return stock
 
+    
     def requiresUpdate(self, ticker):
         return self.db.child("stocks/" + ticker).get("date") != str(date.today)

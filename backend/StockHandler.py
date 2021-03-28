@@ -1,7 +1,8 @@
 import finviz
+from finviz import Screener
 from CurrencyEnum import Currency as cur
 from HeatEnum import HeatCheck
-from GreenWebScraping import get_dictionary
+from GreenWebScraping import get_global_dictionary, get_usa_dictionary
 from datetime import date
 
 
@@ -66,8 +67,10 @@ class Stock:
 
     def get_green_index(self):
         company_name = self.get_company().split(" ")[0]
-        print(self.get_company().split(" ")[0])
-        dictionary = get_dictionary()
+        if (self.stock.get('Country') == "USA"):
+            dictionary = get_usa_dictionary()
+        else:
+            dictionary = get_global_dictionary()
         try:
             return int((500 - dictionary.get(company_name)) / 5)
         except:
@@ -91,3 +94,29 @@ class Stock:
             "price_earning_ratio": self.get_price_earning_ratio(),
             "green_index": self.get_green_index()
         }
+
+#     @staticmethod
+#     def get_top_in_industry(sector):
+#         sector = str(sector)
+#         industry = sector.replace(" ", "").lower()
+#         if(sector == "Technology" or sector == "Communication Services" or sector == "Financial" or sector == "Healthcare" or sector == "Consumer Cyclical"):
+#             filters = ['sec_' + industry, 'cap_mega']
+#         elif (sector == "Consumer Defensive"):
+#             filters = ['sec_' + industry, 'cap_largeover', "sh_price_o50", "sh_avgvol_o1000"]
+#         elif (sector == "Real Estate") :
+#             filters = ['sec_' + industry, 'cap_largeover', "sh_price_o100"]
+#         elif (sector == "Basic Materials") :
+#             filters = ['sec_' + industry, 'cap_largeover', "sh_price_o15", "sh_avgvol_o500"]
+#         else:
+#             filters = ['sec_' + industry, 'cap_largeover']
+
+#         stock_list = Screener(filters=filters, table='Performance', order='-marketcap')[0:10]
+#         s = {}
+#         for item in stock_list:
+#             stock = Stock(item.get("Ticker"))
+#             s[stock.get_green_index()] = stock.get_company()
+#         l = list(s.items())
+#         l.sort(reverse=True)
+#         return l[0:3]
+
+# print(Stock.get_top_in_industry("Consumer Defensive"))
