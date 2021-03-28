@@ -45,6 +45,7 @@ class FB:
             self.setStock(ticker, Sh(ticker).make_profile())
             return jsonify(self.getStock(ticker))
 
+    
     def requiresUpdate(self, ticker):
         try:
             return getStock(ticker).get("date") != str(date.today)

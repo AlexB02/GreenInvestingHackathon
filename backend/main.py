@@ -1,7 +1,9 @@
 from flask import render_template, Flask, request, jsonify
 import os
+import finviz
 from FirebaseStore import FB
 from PortfolioHandler import Portfolio as Ph
+from SectorTop import Sector
 from StockHandler import Stock as Sh
 from datetime import date
 
@@ -39,6 +41,10 @@ def getStock():
     ticker = request.json["ticker"]
     return jsonify(db.getStock(ticker))
 
+@app.route("/getTopThreeGreenStocks", methods=["POST", "GET"])
+def getTopThreeGreenStocks():
+    industry = Sector(request.json["industry"])
+    return jsonify(industry.get_top_in_industry())
 
 def getStockLocal(ticker):
     return db.getStock(ticker)
