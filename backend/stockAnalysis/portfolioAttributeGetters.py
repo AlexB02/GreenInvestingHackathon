@@ -11,7 +11,7 @@ class Portfolio():
         total_vol = 0
         for item in self.portfolio.keys:
             stock = Stock(item)
-            total_vol += (stock.get_volatility * float(portfolio.get(item))/100)
+            total_vol += (stock.get_volatility() * float(self.portfolio.get(item))/100)
         return total_vol
 
             
@@ -19,7 +19,7 @@ class Portfolio():
         total_heat = 0
         for item in self.portfolio.keys:
             stock = Stock(item)
-            total_heat += (stock.get_heatValue * float(portfolio.get(item))/100)
+            total_heat += (stock.get_heatValue() * float(self.portfolio.get(item))/100)
 
         if total_heat > 1.10:
             return heatCheck.HOT
@@ -30,12 +30,12 @@ class Portfolio():
         total_growth = 0
         for item in self.portfolio.keys:
             stock = Stock(item)
-            total_growth += (stock.get_growth_prospect * float(portfolio.get(item))/100)
+            total_growth += (stock.get_growth_prospect() * float(self.portfolio.get(item))/100)
         return total_growth
 
     def portfolio_green_index(self):
         total_green = 0
-        for item in self.list:
+        for item in self.portfolio.keys:
             stock = Stock(item)
-            total_green += (stock.get_green_index * float(portfolio.get(item))/100)
+            total_green += (stock.get_green_index() * float(self.portfolio.get(item))/100)
         return total_green
