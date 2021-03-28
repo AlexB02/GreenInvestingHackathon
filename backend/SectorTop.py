@@ -23,10 +23,10 @@ class Sector:
         s = {}
         for item in stock_list:
             stock = Stock(item.get("Ticker"))
-            s[stock.get_green_index()] = stock.get_company()
+            s[stock.get_green_index()] = item.get("Ticker")
         l = list(s.items())
         l.sort(reverse=True)
-        return l[0:3]
-
-a = Sector("Basic Materials")
-print(a.get_top_in_industry())
+        c = []
+        for a,b in l[0:3]:
+            c.append(b)
+        return c
