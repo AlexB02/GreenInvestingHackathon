@@ -20,7 +20,7 @@ def main():
 def getPortfolio():
     user = request.json["user"]
     name = request.json["name"]
-    return db.getPortfolio(user, name)
+    return jsonify(db.getPortfolio(user, name))
 
 
 @app.route("/setPortfolio", methods=["POST", "GET"])  # {"user": user, "name": name, "stocks": {}}
@@ -37,20 +37,21 @@ def setPortfolio():
 @app.route("/getStock", methods=["POST", "GET"])
 def getStock():
     ticker = request.json["ticker"]
-    return db.getStock(ticker)
+    return jsonify(db.getStock(ticker))
 
 
 def getStockLocal(ticker):
     return db.getStock(ticker)
 
 
-@app.route("/setStock", methods=["POST", "GET"])
+@app.route("/refreshstock", methods=["POST", "GET"])
 def refreshStock():
     ticker = request.json["ticker"]
     if db.requiresUpdate(ticker):
         handler = Sh(ticker)
         db.setStock(ticker, handler.make_profile())
-    return getStockLocal(ticker)
+        print("Set stock")
+    return jsonify(getStockLocal(ticker))
 
 
 if __name__ == "__main__":

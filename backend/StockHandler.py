@@ -66,7 +66,6 @@ class Stock:
 
     def get_green_index(self):
         company_name = self.get_company().split(" ")[0]
-        print(self.get_company().split(" ")[0])
         dictionary = get_dictionary()
         try:
             return int((500 - dictionary.get(company_name)) / 5)
