@@ -9,8 +9,10 @@ import {
 } from "react-router-dom";
 
 import firebase from "firebase";
-// var firebase = require('firebase');
-// var firebaseui = require('firebaseui');
+
+import {Button, Card} from 'react-bootstrap/Button'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBMY-qC5lI8ZCW5MoJcj--D2ZyswABHkII",
@@ -24,8 +26,6 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-// var ui = new firebaseui.auth.AuthUI(firebase.auth());
-// var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function App() {
   return (
@@ -40,17 +40,39 @@ export default function App() {
         <Route path="/">
           <HomePage/>
         </Route>
+        <Route path="/dashboard">
+          <DashboardPage/>
+        </Route>
+        <Route path="/addStocks">
+          <AddStocksPage/>
+        </Route>
       </Switch>
     </Router>
   );
 }
+
+
+function DashboardPage() {
+  return (
+    <Card>
+
+    </Card>
+  );
+}
+
+function AddStocksPage () {
+
+}
+
+
+
 
 function HomePage() {
   return (
   <div>
     <ul>
       <li>
-        <Link to="/signUp">Sign Up</Link>
+        <Link to="/signUp" >Sign Up</Link>
       </li>
       <li>
         <Link to="/logIn">Log In</Link>
@@ -70,7 +92,7 @@ function SignUpPage() {
       signup page
     </h2>
     <div>
-      {googleSignInPopup(googleProvider())}
+      {/* {googleSignInPopup(googleProvider())} */}
     </div>
   </div>
   );
