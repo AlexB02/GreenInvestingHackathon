@@ -14,6 +14,7 @@ class Stock():
     def get_current_price(self):
         current_price = float(self.stock.get("Price"))
         return current_price
+        
     def get_company(self):
         company_name = self.stock.get("Company")
         return company_name
