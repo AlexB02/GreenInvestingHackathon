@@ -1,6 +1,6 @@
-from stockAttributeGetters import Stock
+from StockHandler import Stock
 
-from stockHeatEnum import heatCheck
+from StockHeatEnum import HeatCheck
 
 
 class Portfolio():
@@ -23,9 +23,9 @@ class Portfolio():
             total_heat += stock.get_heatValue
 
         if total_heat / length_list > 1.10:
-            return heatCheck.HOT
+            return HeatCheck.HOT
         elif total_heat / length_list < 0.90:
-            return heatCheck.COLD
+            return HeatCheck.COLD
 
     def portfolio_growth_prospect(self):
         length_list = len(list)
