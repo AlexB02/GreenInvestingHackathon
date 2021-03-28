@@ -44,7 +44,10 @@ def getStock():
 @app.route("/getTopThreeGreenStocks", methods=["POST", "GET"])
 def getTopThreeGreenStocks():
     industry = Sector(request.json["industry"])
-    return jsonify(industry.get_top_in_industry())
+    stocks = []
+    for ticker in industry.get_top_in_industry():
+        stocks.add(Sh(ticker))
+    return jsonify({"top_stocks": stocks})
 
 def getStockLocal(ticker):
     return db.getStock(ticker)
